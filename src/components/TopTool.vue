@@ -30,20 +30,21 @@
 
     <!-- <el-dialog v-model="dialogAddData" width="1000px" title="添加数据">
       <add-data-dialog @returnData="returnData" v-if="dialogAddData" />
-    </el-dialog>
+    </el-dialog> -->
 
     <el-dialog v-model="dialogAnalyse" width="700px" title="河床分析">
       <analyse-dialog @analyse="analyse" v-if="dialogAnalyse" />
-    </el-dialog> -->
+    </el-dialog>
   </div>
 </template>
 
 <script>
 import { defineComponent, ref } from "vue";
+//import AddDataDialog from "./AddDataDialog.vue";
+import AnalyseDialog from "./AnalyseDialog.vue";
 import router from "@/router";
 export default defineComponent({
-  components: {
-  },
+  components: { AnalyseDialog },
   emits: ["returnFileList", "operateDraw", "analyse"],
   setup(_, context) {
     const dialogAddData = ref(false);
@@ -82,7 +83,10 @@ export default defineComponent({
     };
 
     // { type: string, value: any }
-    const analyse = () => {};
+    const analyse = (val) => {
+      context.emit("analyse", val);
+      dialogAnalyse.value = false;
+    };
 
     return {
       state,

@@ -1,9 +1,9 @@
 <template>
   <div class="right-visual">
     <div ref="container" class="container"></div>
-    <!-- <el-dialog v-model="chartVisual" width="900px" id="chart" title="可视化结果">
+    <el-dialog v-model="chartVisual" width="900px" id="chart" title="可视化结果">
       <chart-visual :chartVisualInfo="chartVisualInfo"></chart-visual>
-    </el-dialog> -->
+    </el-dialog>
     <el-dialog
       v-model="dialogVisible"
       :width="300"
@@ -27,8 +27,9 @@ import mapBoxGl, { AnySourceData } from "mapbox-gl";
 import { getCoordinates, getAnalysisGeoJson, getContent } from "@/api/request";
 import MapboxDraw from "@mapbox/mapbox-gl-draw";
 import "mapbox-gl/dist/mapbox-gl.css";
+import ChartVisual from "./ChartVisual.vue";
 export default defineComponent({
-  components: {},
+  components: { ChartVisual },
   props: {
     layerList: {
       type: Array,
@@ -38,7 +39,7 @@ export default defineComponent({
   setup(props, context) {
     const container = ref();
     let map;
-    // const chartVisual = ref(false);
+    const chartVisual = ref(false);
     const chartVisualInfo = ref();
     const dialogVisible = ref(false);
     const inputValue = ref("");
@@ -348,6 +349,7 @@ export default defineComponent({
     //   visualId: string;
     // }
     const addChart = async (param) => {
+      console.log(param)
       chartVisualInfo.value = param;
       chartVisual.value = true;
     };
@@ -399,7 +401,7 @@ export default defineComponent({
       changeLayerState,
       operateDraw,
       addChart,
-      //chartVisual,
+      chartVisual,
       chartVisualInfo,
       moveLayer,
       dialogVisible,

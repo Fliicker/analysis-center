@@ -88,7 +88,7 @@ export default defineComponent({
         layerManage.value.delLayer(val.content.id);
         rightMap.value.removeLayer(val.content.id);
       } else if (val.type === "chart") {
-        // rightMap.value.addChart(val.content);
+        rightMap.value.addChart(val.content);
       }
     };
 
@@ -122,6 +122,11 @@ export default defineComponent({
       rightMap.value.addMapLayer(param);
     };
 
+    const analyse = async (val) => {
+      console.log(val)
+      await dataManage.value.addAnalyse(val);
+    };
+
     onMounted(async () => {
       const res = await getLayersInfo(import.meta.env.VITE_APP_ROUTER_ID);
       if (res != null && res.code === 0) {
@@ -142,7 +147,7 @@ export default defineComponent({
       hideLayer,
       operateDraw,
       drawHandle,
-      // analyse,
+      analyse,
       skeletonFlag,
       layerList,
       moveLayer,

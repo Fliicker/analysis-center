@@ -238,7 +238,7 @@ export default defineComponent({
       //     fileName: string;
       //     visualType: string;
       //   }
-      console.log(param)
+      console.log(param);
       const jsonData = {
         caseId: import.meta.env.VITE_APP_ROUTER_ID,
         geoJson: param.geoJson,
@@ -246,7 +246,7 @@ export default defineComponent({
         visualType: param.visualType,
       };
       const data = await addDraw(jsonData);
-      console.log(data)
+      console.log(data);
       if (data != null && data.code === 0) {
         if (
           treeData.value.length != 0 &&
@@ -285,177 +285,181 @@ export default defineComponent({
       }
     };
 
-    // const addAnalyse = async (param: { type; value}) => {
-    //   console.log(param);
-    //   if (param.type === "section") {
-    //     addData([param.value.dem]);
-    //     context.emit("operateLayer", {
-    //       content: {
-    //         id: param.value.dem.fileId,
-    //         name: param.value.dem.fileName,
-    //         visualType: param.value.dem.visualType,
-    //         visualId: param.value.dem.visualId,
-    //       },
-    //       type: "add",
-    //     });
-    //     const data = await addSection({
-    //       caseId: import.meta.env.VITE_APP_ROUTER_ID as string,
-    //       sectionId: param.value.section as string,
-    //       demId: param.value.dem.fileId,
-    //       fileName: param.value.fileName,
-    //     });
-    //     if (data !== null && data.code === 0) {
-    //       await checkStateHandle(data.data, "断面形态");
-    //     }
-    //   } else if (param.type === "sectionCompare") {
-    //     addData(param.value.demList);
-    //     const demList: string[] = [];
-    //     param.value.demList.forEach((item: any) => {
-    //       demList.push(item.fileId);
-    //       context.emit("operateLayer", {
-    //         content: {
-    //           id: item.fileId,
-    //           name: item.fileName,
-    //           visualType: item.visualType,
-    //           visualId: item.visualId,
-    //         },
-    //         type: "add",
-    //       });
-    //     });
-    //     const data = await addSectionCompare({
-    //       caseId: import.meta.env.VITE_APP_ROUTER_ID as string,
-    //       sectionId: param.value.section as string,
-    //       fileName: param.value.fileName,
-    //       demList: demList,
-    //     });
-    //     if (data != null && data.code === 0) {
-    //       await checkStateHandle(data.data, "断面比较");
-    //     }
-    //   } else if (param.type === "sectionFlush" || param.type === "regionFlush" || param.type === "elevationFlush" || param.type === "flushContour") {
-    //     addData([param.value.benchmarkDem]);
-    //     context.emit("operateLayer", {
-    //       content: {
-    //         id: param.value.benchmarkDem.fileId,
-    //         name: param.value.benchmarkDem.fileName,
-    //         visualType: param.value.benchmarkDem.visualType,
-    //         visualId: param.value.benchmarkDem.visualId,
-    //       },
-    //       type: "add",
-    //     });
-    //     addData([param.value.referDem]);
-    //     context.emit("operateLayer", {
-    //       content: {
-    //         id: param.value.referDem.fileId,
-    //         name: param.value.referDem.fileName,
-    //         visualType: param.value.referDem.visualType,
-    //         visualId: param.value.referDem.visualId,
-    //       },
-    //       type: "add",
-    //     });
-    //     if (param.type === "sectionFlush") {
-    //       const data = await addSectionFlush({
-    //         caseId: import.meta.env.VITE_APP_ROUTER_ID as string,
-    //         sectionId: param.value.section,
-    //         benchmarkId: param.value.benchmarkDem.fileId,
-    //         referId: param.value.referDem.fileId,
-    //         fileName: param.value.fileName,
-    //       });
-    //       if (data != null && data.code === 0) {
-    //         await checkStateHandle(data.data, "断面冲淤");
-    //       }
-    //     } else if (param.type === "regionFlush") {
-    //       const data = await addRegionFlush({
-    //         caseId: import.meta.env.VITE_APP_ROUTER_ID as string,
-    //         regionId: param.value.section,
-    //         benchmarkId: param.value.benchmarkDem.fileId,
-    //         referId: param.value.referDem.fileId,
-    //         fileName: param.value.fileName,
-    //       });
-    //       if (data != null && data.code === 0) {
-    //         await checkStateHandle(data.data, "区域冲淤");    //将分析结果添加至结果集
-    //       }
-    //     } else if (param.type === "elevationFlush") {
-    //       const data = await addElevationFlush({
-    //         caseId: import.meta.env.VITE_APP_ROUTER_ID as string,
-    //         benchmarkId: param.value.benchmarkDem.fileId,
-    //         referId: param.value.referDem.fileId,
-    //         fileName: param.value.fileName,
-    //       });
-    //       if (data != null && (data as any).code === 0) {
-    //         console.log(data);
-    //         treeData.value[treeData.value.length - 1].children.push({
-    //           id: data.data.id,
-    //           label: data.data.fileName,
-    //           flag: false,
-    //           children: [],
-    //           visualId: data.data.visualId,
-    //           visualType: "elevationFlush",
-    //         });
-    //         notice("success", "成功", "特定高程冲淤计算成功！");
-    //       }
-    //     } else {
-    //       const data = await addFlushContour({
-    //         caseId: import.meta.env.VITE_APP_ROUTER_ID as string,
-    //         benchmarkId: param.value.benchmarkDem.fileId,
-    //         referId: param.value.referDem.fileId,
-    //         fileName: param.value.fileName,
-    //       });
-    //       if (data != null && (data as any).code === 0) {
-    //         console.log(data);
-    //         treeData.value[treeData.value.length - 1].children.push({
-    //           id: data.data.id,
-    //           label: data.data.fileName,
-    //           flag: false,
-    //           children: [],
-    //           visualId: data.data.visualId,
-    //           visualType: "flushContour",
-    //         });
-    //         notice("success", "成功", "冲淤等深线计算成功！");
-    //       }
-    //     }
-    //   } else if (param.type === "slope") {
-    //     console.log(param.value);
-    //     const data = await addSlope({
-    //       caseId: import.meta.env.VITE_APP_ROUTER_ID as string,
-    //       demId: param.value.dem.fileId as string,
-    //       fileName: param.value.fileName,
-    //     });
-
-    //     if (data != null && (data as any).code === 0) {
-    //       console.log(data);
-    //       treeData.value[treeData.value.length - 1].children.push({
-    //         id: data.data.id,
-    //         label: data.data.fileName,
-    //         flag: false,
-    //         children: [],
-    //         visualId: data.data.visualId,
-    //         visualType: "slope",
-    //       });
-    //       notice("success", "成功", "河床坡度计算成功！");
-    //     }
-    //   } else if (param.type === "volume") {
-    //     addData([param.value.dem]);
-    //     context.emit("operateLayer", {
-    //       content: {
-    //         id: param.value.dem.fileId,
-    //         name: param.value.dem.fileName,
-    //         visualType: param.value.dem.visualType,
-    //         visualId: param.value.dem.visualId,
-    //       },
-    //       type: "add",
-    //     });
-    //     const data = await computeVolume({
-    //       caseId: import.meta.env.VITE_APP_ROUTER_ID as string,
-    //       regionId: param.value.region as string,
-    //       demId: param.value.dem.fileId,
-    //       deep: param.value.deep,
-    //       fileName: param.value.fileName,
-    //     });
-    //     if (data != null && data.code === 0) {
-    //       await checkStateHandle(data.data, "容积计算");
-    //     }
-    //   }
-    // };
+    const addAnalyse = async (param) => {
+      console.log(param);
+      if (param.type === "section") {
+        // addData([param.value.dem]);
+        // context.emit("operateLayer", {
+        //   content: {
+        //     id: param.value.dem.fileId,
+        //     name: param.value.dem.fileName,
+        //     visualType: param.value.dem.visualType,
+        //     visualId: param.value.dem.visualId,
+        //   },
+        //   type: "add",
+        // });
+        // const data = await addSection({
+        //   caseId: import.meta.env.VITE_APP_ROUTER_ID as string,
+        //   sectionId: param.value.section as string,
+        //   demId: param.value.dem.fileId,
+        //   fileName: param.value.fileName,
+        // });
+        // if (data !== null && data.code === 0) {
+        //   await checkStateHandle(data.data, "断面形态");
+        // }
+      } else if (param.type === "sectionCompare") {
+        // addData(param.value.demList);
+        // const demList: string[] = [];
+        // param.value.demList.forEach((item: any) => {
+        //   demList.push(item.fileId);
+        //   context.emit("operateLayer", {
+        //     content: {
+        //       id: item.fileId,
+        //       name: item.fileName,
+        //       visualType: item.visualType,
+        //       visualId: item.visualId,
+        //     },
+        //     type: "add",
+        //   });
+        // });
+        // const data = await addSectionCompare({
+        //   caseId: import.meta.env.VITE_APP_ROUTER_ID as string,
+        //   sectionId: param.value.section as string,
+        //   fileName: param.value.fileName,
+        //   demList: demList,
+        // });
+        // if (data != null && data.code === 0) {
+        //   await checkStateHandle(data.data, "断面比较");
+        // }
+      } else if (
+        param.type === "sectionFlush" ||
+        param.type === "regionFlush" ||
+        param.type === "elevationFlush" ||
+        param.type === "flushContour"
+      ) {
+        addData([param.value.benchmarkDem]);
+        context.emit("operateLayer", {
+          content: {
+            id: param.value.benchmarkDem.fileId,
+            name: param.value.benchmarkDem.fileName,
+            visualType: param.value.benchmarkDem.visualType,
+            visualId: param.value.benchmarkDem.visualId,
+          },
+          type: "add",
+        });
+        addData([param.value.referDem]);
+        context.emit("operateLayer", {
+          content: {
+            id: param.value.referDem.fileId,
+            name: param.value.referDem.fileName,
+            visualType: param.value.referDem.visualType,
+            visualId: param.value.referDem.visualId,
+          },
+          type: "add",
+        });
+        if (param.type === "sectionFlush") {
+          const data = await addSectionFlush({
+            caseId: import.meta.env.VITE_APP_ROUTER_ID,
+            sectionId: param.value.section,
+            benchmarkId: param.value.benchmarkDem.fileId,
+            referId: param.value.referDem.fileId,
+            fileName: param.value.fileName,
+          });
+          if (data != null && data.code === 0) {
+            await checkStateHandle(data.data, "断面冲淤");
+          }
+        } else if (param.type === "regionFlush") {
+          const data = await addRegionFlush({
+            caseId: import.meta.env.VITE_APP_ROUTER_ID,
+            regionId: param.value.section,
+            benchmarkId: param.value.benchmarkDem.fileId,
+            referId: param.value.referDem.fileId,
+            fileName: param.value.fileName,
+          });
+          if (data != null && data.code === 0) {
+            await checkStateHandle(data.data, "区域冲淤");    //将分析结果添加至结果集
+          }
+        } else if (param.type === "elevationFlush") {
+          const data = await addElevationFlush({
+            caseId: import.meta.env.VITE_APP_ROUTER_ID,
+            benchmarkId: param.value.benchmarkDem.fileId,
+            referId: param.value.referDem.fileId,
+            fileName: param.value.fileName,
+          });
+          if (data != null && data.code === 0) {
+            console.log(data);
+            treeData.value[treeData.value.length - 1].children.push({
+              id: data.data.id,
+              label: data.data.fileName,
+              flag: false,
+              children: [],
+              visualId: data.data.visualId,
+              visualType: "elevationFlush",
+            });
+            notice("success", "成功", "特定高程冲淤计算成功！");
+          }
+        } else {
+          const data = await addFlushContour({
+            caseId: import.meta.env.VITE_APP_ROUTER_ID,
+            benchmarkId: param.value.benchmarkDem.fileId,
+            referId: param.value.referDem.fileId,
+            fileName: param.value.fileName,
+          });
+          if (data != null && data.code === 0) {
+            console.log(data);
+            treeData.value[treeData.value.length - 1].children.push({
+              id: data.data.id,
+              label: data.data.fileName,
+              flag: false,
+              children: [],
+              visualId: data.data.visualId,
+              visualType: "flushContour",
+            });
+            notice("success", "成功", "冲淤等深线计算成功！");
+          }
+        }
+      } else if (param.type === "slope") {
+        // console.log(param.value);
+        // const data = await addSlope({
+        //   caseId: import.meta.env.VITE_APP_ROUTER_ID as string,
+        //   demId: param.value.dem.fileId as string,
+        //   fileName: param.value.fileName,
+        // });
+        // if (data != null && (data as any).code === 0) {
+        //   console.log(data);
+        //   treeData.value[treeData.value.length - 1].children.push({
+        //     id: data.data.id,
+        //     label: data.data.fileName,
+        //     flag: false,
+        //     children: [],
+        //     visualId: data.data.visualId,
+        //     visualType: "slope",
+        //   });
+        //   notice("success", "成功", "河床坡度计算成功！");
+        // }
+      } else if (param.type === "volume") {
+        // addData([param.value.dem]);
+        // context.emit("operateLayer", {
+        //   content: {
+        //     id: param.value.dem.fileId,
+        //     name: param.value.dem.fileName,
+        //     visualType: param.value.dem.visualType,
+        //     visualId: param.value.dem.visualId,
+        //   },
+        //   type: "add",
+        // });
+        // const data = await computeVolume({
+        //   caseId: import.meta.env.VITE_APP_ROUTER_ID as string,
+        //   regionId: param.value.region as string,
+        //   demId: param.value.dem.fileId,
+        //   deep: param.value.deep,
+        //   fileName: param.value.fileName,
+        // });
+        // if (data != null && data.code === 0) {
+        //   await checkStateHandle(data.data, "容积计算");
+        // }
+      }
+    };
 
     const operateLayer = async (keyword, flag) => {
       if (flag) {
@@ -505,7 +509,8 @@ export default defineComponent({
           }
         } else if (keyword === "rename") {
           dialogRename.value = true;
-          input.value = toString(selectedData.value?.label);
+          console.log(selectedData.value);
+          input.value = selectedData.value?.label;
         } else if (keyword === "download") {
           window.location.href = `/monitor/analysis/downloadAnalysisResult/${selectedData.value?.id}`;
         }
@@ -699,7 +704,7 @@ export default defineComponent({
       treeData,
       isLayerVisual,
       addDrawData,
-      //addAnalyse,
+      addAnalyse,
       downloadAble,
       dialogRename,
       input,
